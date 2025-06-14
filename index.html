@@ -10,15 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Montserrat', sans-serif; /* Changed font to Montserrat */
-            background-color: hsl(210, 100%, 98%); /* Very light blue background */
+            font-family: 'Montserrat', sans-serif;
+            background-color: hsl(210, 100%, 95%); /* Slightly darker light blue background */
             color: hsl(210, 20%, 20%); /* Dark blue-grey text */
             line-height: 1.6;
+            /* Removed body padding; container will handle internal margins */
         }
         .container {
-            max-width: 800px; /* Reduced max-width for more prominent margins */
-            margin: 2rem auto;
-            padding: 1.5rem;
+            max-width: 800px; /* Content width for main sections */
+            margin: 2rem auto; /* Center content and add vertical margin */
+            padding: 1.5rem; /* Internal padding for content */
             background-color: #FFFFFF; /* White card background */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 0px; /* Sharp corners */
@@ -28,21 +29,21 @@
             padding-bottom: 0.75rem;
             margin-bottom: 1.5rem;
             color: hsl(210, 70%, 25%); /* Rich dark blue title text */
-            display: flex; /* Use flexbox to align icon and text */
-            align-items: center; /* Vertically center icon and text */
+            display: flex;
+            align-items: center;
         }
         .section-title i {
-            margin-right: 0.75rem; /* Space between icon and text */
-            color: hsl(210, 70%, 25%); /* Icon color matches title text */
+            margin-right: 0.75rem;
+            color: hsl(210, 70%, 25%);
         }
         .job-title, .project-title, .certificate-title {
-            color: hsl(210, 70%, 25%); /* Rich dark blue for titles */
+            color: hsl(210, 70%, 25%);
         }
         .company-name, .university-name {
-            color: hsl(210, 15%, 35%); /* Darker grey with blue hint for sub-titles */
+            color: hsl(210, 15%, 35%);
         }
         .date {
-            color: hsl(210, 10%, 50%); /* Medium grey with blue hint for dates */
+            color: hsl(210, 10%, 50%);
         }
         ul {
             list-style-type: disc;
@@ -52,23 +53,38 @@
         ul li {
             margin-bottom: 0.5rem;
         }
-        nav a {
-            transition: color 0.3s ease;
-            color: hsl(210, 20%, 20%); /* Default nav link color - dark blue-grey */
-        }
-        nav a:hover {
-            color: hsl(210, 70%, 25%); /* Dark blue on hover */
-        }
+        /* Sticky Navigation Bar Styles */
         .sticky-nav {
             position: sticky;
             top: 0;
             z-index: 10;
-            background-color: hsl(210, 100%, 95%); /* Changed to a shade of blue */
+            background-color: #0A192F; /* Very dark blue nav bar background */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            padding: 1rem 0;
-            border-bottom-left-radius: 0px; /* Sharp corners */
-            border-bottom-right-radius: 0px; /* Sharp corners */
+            padding: 0.5rem 0; /* Reduced padding for smaller height */
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            width: 100%; /* Ensure it spans full width */
         }
+        .sticky-nav .nav-links-wrapper {
+            max-width: 800px; /* Constrain internal links to content width */
+            margin: 0 auto; /* Center the links */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Ensure wrapper takes full height of nav */
+            padding: 0 1.5rem; /* Add padding inside for smaller screens */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        .sticky-nav .nav-links-wrapper a {
+            color: #FFFFFF; /* White text for contrast on dark nav bar */
+            transition: color 0.3s ease;
+            text-decoration: none; /* Remove underline from nav links */
+        }
+        .sticky-nav .nav-links-wrapper a:hover {
+            color: hsl(210, 80%, 85%); /* Lighter blue on hover for nav links */
+        }
+        /* End Sticky Navigation Bar Styles */
+
         .badge {
             display: inline-block;
             background-color: hsl(210, 80%, 95%); /* Very light blue */
@@ -104,7 +120,7 @@
             padding-bottom: 0.5rem;
         }
         summary::-webkit-details-marker {
-            display: none; /* Remove default marker for Webkit browsers */
+            display: none;
         }
         summary .arrow-icon {
             transition: transform 0.2s ease-in-out;
@@ -164,17 +180,52 @@
         .square-headshot {
             border-radius: 0px; /* Make it square */
         }
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto; /* Reduce vertical margin on mobile */
+                padding: 1rem; /* Reduce padding on mobile */
+                max-width: 100%; /* Allow container to be wider on small screens */
+            }
+            body {
+                padding-left: 1rem; /* Ensure padding on body for very small screens */
+                padding-right: 1rem;
+            }
+            .sticky-nav .nav-links-wrapper {
+                justify-content: space-around; /* Distribute links more evenly on small screens */
+                font-size: 0.9rem; /* Smaller font size for nav links */
+                padding: 0 0.5rem; /* Reduced padding for nav links */
+            }
+            .sticky-nav .nav-links-wrapper a {
+                padding: 0.25rem 0.5rem; /* Add some padding to clickable area */
+            }
+            .section-title {
+                font-size: 1.5rem; /* Adjust section title font size */
+            }
+            .job-title, .project-title, .certificate-title {
+                font-size: 1.1rem; /* Adjust sub-title font sizes */
+            }
+            .company-name, .university-name {
+                font-size: 1rem;
+            }
+            .date {
+                font-size: 0.85rem;
+            }
+            ul li {
+                font-size: 0.95rem; /* Adjust bullet point font size */
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
     <nav class="sticky-nav">
-        <div class="container flex justify-center space-x-6 text-lg font-medium">
-            <a href="#summary" class="hover:text-dark-blue">Summary</a>
-            <a href="#education" class="hover:text-dark-blue">Education</a>
-            <a href="#experience" class="hover:text-dark-blue">Experience</a>
-            <a href="#projects" class="hover:text-dark-blue">Projects</a>
-            <a href="#skills" class="hover:text-dark-blue">Skills</a>
-            <a href="#certificates" class="hover:text-dark-blue">Certificates</a>
+        <div class="nav-links-wrapper space-x-4 text-lg font-medium"> <!-- Modified: Removed .container, added .nav-links-wrapper -->
+            <a href="#summary">Summary</a>
+            <a href="#education">Education</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#certificates">Certificates</a>
         </div>
     </nav>
 

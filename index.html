@@ -71,14 +71,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%; /* Ensure wrapper takes full height of nav */
-            padding: 0 1.5rem; /* Add padding inside for smaller screens */
-            box-sizing: border-box; /* Include padding in width calculation */
+            height: 100%;
+            padding: 0 1.5rem; /* Add padding inside for larger screens */
+            box-sizing: border-box;
+            gap: 1rem; /* Use gap for spacing between links */
+            font-size: 0.95rem; /* Default font size for nav links */
+            font-weight: 500; /* Ensure font weight is applied */
         }
         .sticky-nav .nav-links-wrapper a {
             color: #FFFFFF; /* White text for contrast on dark nav bar */
             transition: color 0.3s ease;
             text-decoration: none; /* Remove underline from nav links */
+            padding: 0.25rem 0.5rem; /* Padding for each clickable link area */
+            white-space: nowrap; /* Prevent text wrapping within a link */
+            flex-shrink: 0; /* Prevent links from shrinking too much */
         }
         .sticky-nav .nav-links-wrapper a:hover {
             color: hsl(210, 80%, 85%); /* Lighter blue on hover for nav links */
@@ -192,12 +198,21 @@
                 padding-right: 1rem;
             }
             .sticky-nav .nav-links-wrapper {
-                justify-content: space-around; /* Distribute links more evenly on small screens */
-                font-size: 0.9rem; /* Smaller font size for nav links */
-                padding: 0 0.5rem; /* Reduced padding for nav links */
+                justify-content: space-between; /* Distribute links more evenly on small screens */
+                font-size: 0.8rem; /* Smaller font size for nav links on mobile */
+                padding: 0 0.5rem; /* Reduced horizontal padding on mobile */
+                overflow-x: auto; /* Allow horizontal scrolling if content overflows */
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                gap: 0.5rem; /* Smaller gap on mobile */
+            }
+            .sticky-nav .nav-links-wrapper::-webkit-scrollbar {
+                display: none; /* Hide scrollbar for Webkit browsers */
             }
             .sticky-nav .nav-links-wrapper a {
-                padding: 0.25rem 0.5rem; /* Add some padding to clickable area */
+                padding: 0.2rem 0.3rem; /* Further reduced padding for clickable area */
+                flex-shrink: 0; /* Prevent links from shrinking too much */
             }
             .section-title {
                 font-size: 1.5rem; /* Adjust section title font size */
@@ -219,7 +234,7 @@
 </head>
 <body class="antialiased">
     <nav class="sticky-nav">
-        <div class="nav-links-wrapper space-x-4 text-lg font-medium"> <!-- Modified: Removed .container, added .nav-links-wrapper -->
+        <div class="nav-links-wrapper font-medium"> <!-- Removed space-x-4, replaced with gap in CSS -->
             <a href="#summary">Summary</a>
             <a href="#education">Education</a>
             <a href="#experience">Experience</a>

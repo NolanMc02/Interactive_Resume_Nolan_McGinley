@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nolan J. McGinley - Interactive Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Changed font to Montserrat */
+            background-color: hsl(210, 100%, 98%); /* Very light blue background */
+            color: hsl(210, 20%, 20%); /* Dark blue-grey text */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #FFFFFF; /* White card background */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 0px; /* Sharp corners */
+        }
+        .section-title {
+            border-bottom: 2px solid hsl(210, 70%, 25%); /* Rich dark blue border */
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: hsl(210, 70%, 25%); /* Rich dark blue title text */
+            display: flex; /* Use flexbox to align icon and text */
+            align-items: center; /* Vertically center icon and text */
+        }
+        .section-title i {
+            margin-right: 0.75rem; /* Space between icon and text */
+            color: hsl(210, 70%, 25%); /* Icon color matches title text */
+        }
+        .job-title, .project-title, .certificate-title {
+            color: hsl(210, 70%, 25%); /* Rich dark blue for titles */
+        }
+        .company-name, .university-name {
+            color: hsl(210, 15%, 35%); /* Darker grey with blue hint for sub-titles */
+        }
+        .date {
+            color: hsl(210, 10%, 50%); /* Medium grey with blue hint for dates */
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+        nav a {
+            transition: color 0.3s ease;
+            color: hsl(210, 20%, 20%); /* Default nav link color - dark blue-grey */
+        }
+        nav a:hover {
+            color: hsl(210, 70%, 25%); /* Dark blue on hover */
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+            border-bottom-left-radius: 0px; /* Sharp corners */
+            border-bottom-right-radius: 0px; /* Sharp corners */
+        }
+        .badge {
+            display: inline-block;
+            background-color: hsl(210, 80%, 95%); /* Very light blue */
+            color: hsl(210, 70%, 25%); /* Dark blue text */
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px; /* Slightly rounded for badges */
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Style for details/summary */
+        details {
+            margin-bottom: 1rem;
+            background-color: hsl(210, 20%, 95%); /* Light blue-grey for detail sections */
+            border-radius: 0px; /* Sharp corners */
+            padding: 1rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        details:hover {
+            background-color: hsl(210, 30%, 90%); /* Slightly darker blue-grey on hover */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        summary {
+            list-style: none; /* Remove default marker */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: hsl(210, 70%, 25%); /* Dark blue for summary text */
+            padding-bottom: 0.5rem;
+        }
+        summary::-webkit-details-marker {
+            display: none; /* Remove default marker for Webkit browsers */
+        }
+        summary .arrow-icon {
+            transition: transform 0.2s ease-in-out;
+            margin-left: 1rem;
+            color: hsl(210, 10%, 50%); /* Medium grey with blue hint for arrow */
+        }
+        details[open] summary .arrow-icon {
+            transform: rotate(90deg);
+        }
+        details div { /* Content inside details */
+            padding-top: 0.5rem;
+        }
+        .header-link {
+            color: hsl(210, 20%, 20%); /* Default dark blue-grey for header links */
+            transition: color 0.3s ease;
+        }
+        .header-link:hover {
+            color: hsl(210, 70%, 25%); /* Dark blue on hover for header links */
+        }
+
+        /* Custom styles for UF section */
+        .uf-details {
+            background-color: hsl(210, 80%, 95%); /* Light blue background for UF */
+            border: 1px solid #0021A5; /* Gator Blue */
+        }
+        .uf-details:hover {
+            background-color: hsl(210, 80%, 90%); /* Slightly darker blue on hover */
+        }
+        .uf-details summary {
+            color: #0021A5; /* Gator Blue for UF summary text */
+        }
+        .uf-details .date {
+            color: #FA4616; /* Gator Orange for UF dates */
+        }
+        .uf-details .university-name {
+             color: #0021A5; /* Gator Blue for UF name */
+        }
+
+        /* Custom styles for UCF section */
+        .ucf-details {
+            background-color: hsl(0, 0%, 97%); /* Very light grey for UCF */
+            border: 1px solid #000000; /* Black */
+        }
+        .ucf-details:hover {
+            background-color: hsl(0, 0%, 92%); /* Slightly darker grey on hover */
+        }
+        .ucf-details summary {
+            color: #000000; /* Black for UCF summary text */
+        }
+        .ucf-details .date {
+            color: #BA9F49; /* Knights Gold for UCF dates */
+        }
+        .ucf-details .university-name {
+            color: #000000; /* Black for UCF name */
+        }
+        /* Style for square headshot */
+        .square-headshot {
+            border-radius: 0px; /* Make it square */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="sticky-nav">
+        <div class="container flex justify-center space-x-6 text-lg font-medium">
+            <a href="#summary" class="hover:text-dark-blue">Summary</a>
+            <a href="#education" class="hover:text-dark-blue">Education</a>
+            <a href="#experience" class="hover:text-dark-blue">Experience</a>
+            <a href="#projects" class="hover:text-dark-blue">Projects</a>
+            <a href="#skills" class="hover:text-dark-blue">Skills</a>
+            <a href="#certificates" class="hover:text-dark-blue">Certificates</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="text-center mb-10">
+            <!-- Headshot -->
+            <img src="https://i.imgur.com/WoGOA3e.jpeg" 
+                 alt="Nolan J. McGinley Headshot"
+                 class="w-32 h-32 mx-auto mb-4 object-cover border-2 border-0A2E50 square-headshot"
+                 onerror="this.onerror=null;this.src='https://placehold.co/128x128/f0f0f0/666666?text=Image+Load+Failed';">
+
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Nolan J. McGinley</h1>
+            <!-- Title under name -->
+            <p class="text-2xl font-semibold text-gray-700 mb-6">Optical Applications Engineer</p>
+
+            <p class="text-lg text-gray-600">
+                <a href="https://linkedin.com/in/nolanjmcginley" target="_blank" class="header-link hover:underline">linkedin.com/in/nolanjmcginley</a> | (352) 223-1072 | <a href="mailto:nolanjmcginley@outlook.com" class="header-link hover:underline">nolanjmcginley@outlook.com</a>
+            </p>
+        </header>
+
+        <!-- Summary Section -->
+        <section id="summary" class="mb-10">
+            <h2 class="text-2xl font-semibold section-title">
+                <i class="fas fa-info-circle"></i> Summary
+            </h2>
+            <p class="text-md text-gray-800">
+                Highly accomplished and results-oriented Photonic Science & Engineering professional with a strong academic background and practical experience in laser applications, optical design, and engineering. Proven ability to design innovative solutions, optimize system performance, and effectively communicate complex technical concepts. Currently pursuing a Master of Science in Electrical and Computer Engineering to further expand expertise. Seeking to leverage comprehensive skills in optics, programming, mechanical design, and electrical engineering to contribute to cutting-edge technological advancements.
+            </p>
+        </section>
+
+        <section id="education" class="mb-10">
+            <h2 class="text-2xl font-semibold section-title">
+                <i class="fas fa-graduation-cap"></i> Education
+            </h2>
+            
+            <!-- University of Florida (UF) - More Recent -->
+            <details open class="uf-details">
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <div class="flex justify-between items-baseline w-full">
+                            <h3 class="text-xl font-semibold university-name">University of Florida</h3>
+                            <span class="text-md date">August 2025 – Expected 2027</span>
+                        </div>
+                        <p class="text-md text-gray-700">Master of Science in Electrical and Computer Engineering</p>
+                        <p class="text-sm text-gray-500">Gainesville, FL</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <p class="text-md text-gray-800">
+                        This program focuses on advanced concepts in electrical and computer engineering, preparing for specialized roles in areas like signal processing, embedded systems, and advanced circuits, building upon a strong foundation in photonics.
+                    </p>
+                </div>
+            </details>
+
+            <!-- University of Central Florida (UCF) -->
+            <details class="ucf-details">
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <div class="flex justify-between items-baseline w-full">
+                            <h3 class="text-xl font-semibold university-name">University of Central Florida</h3>
+                            <span class="text-md date">August 2020 – May 2024</span>
+                        </div>
+                        <p class="text-md text-gray-700">Bachelor of Science in Photonic Science & Engineering, GPA 3.8/4.0</p>
+                        <p class="text-sm text-gray-500">Orlando, FL</p>
+                        <!-- Removed Minor in Computer Science -->
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <p class="text-md text-gray-800">
+                        Completed a rigorous curriculum focused on the principles of light, optics, and laser technologies, with hands-on experience in laboratory settings and advanced coursework in optical systems and design.
+                    </p>
+                </div>
+            </details>
+        </section>
+
+        <section id="experience" class="mb-10">
+            <h2 class="text-2xl font-semibold section-title">
+                <i class="fas fa-briefcase"></i> Professional Experience
+            </h2>
+
+            <details open>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <div class="flex justify-between items-baseline w-full">
+                            <h3 class="text-xl font-semibold company-name">LaserStar Technologies</h3>
+                            <span class="text-md date">May 2024 – Present</span>
+                        </div>
+                        <p class="text-sm text-gray-500">Orlando, FL</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <h4 class="text-lg font-semibold job-title mt-4 mb-2">Senior Applications Engineer</h4>
+                    <span class="text-sm date">May 2025 – Present</span>
+                    <ul class="list-disc ml-6 text-gray-800 mt-2">
+                        <li>Provided expert technical advisory to medical and industrial customers, guiding them in the application of laser welding, marking, and cutting technologies to their projects.</li>
+                        <li>Characterized and validated new laser systems, ensuring readiness and optimal performance prior to product launch.</li>
+                        <li>Developed and delivered comprehensive internal and external training programs on laser systems, enhancing user proficiency and adoption.</li>
+                        <li>Designed bespoke laser solutions for welding and engraving, creatively integrating optical components to meet diverse client requirements.</li>
+                        <li>Conducted rigorous testing of power meters, beam expanders, and optical rails to verify precise laser functionality and output.</li>
+                    </ul>
+
+                    <h4 class="text-lg font-semibold job-title mt-6 mb-2">Junior Applications Engineer</h4>
+                    <span class="text-sm date">May 2024 – April 2025</span>
+                    <ul class="list-disc ml-6 text-gray-800 mt-2">
+                        <li>Assisted senior engineers in designing and testing initial laser solutions.</li>
+                        <li>Communicated with companies to identify application needs and tested client samples to determine feasibility.</li>
+                        <li>Gained proficiency in the assembly, calibration, and troubleshooting of various laser systems.</li>
+                        <li>Instructed clients on laser theory and proper operation of laser welders for their specific application.</li>
+                        <li>Built custom Nd:YAG and fiber laser welders to optimize laser/material interaction results for client needs.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <div class="flex justify-between items-baseline w-full">
+                            <h3 class="text-xl font-semibold job-title">Optical Engineering Intern</h3>
+                            <span class="text-md date">May 2023 – August 2023</span>
+                        </div>
+                        <p class="text-lg company-name">Honeywell, Sensing and Safety Technologies</p>
+                        <p class="text-sm text-gray-500">Richardson, TX</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <ul class="list-disc ml-6 text-gray-800">
+                        <li>Improved digital holographic microscope image resolution by 25% by minimizing stray light impact through strategic mechanical design, material selection, and precise filter implementation.</li>
+                        <li>Designed a new microscope light-tube using Solidworks, assessed its performance via 3D printing, and validated functionality using a USAF 1951 target.</li>
+                        <li>Devised and implemented a Python-based image pre-processing method, achieving an 85% accuracy rate in identifying and eliminating low-quality holographic images, providing user alerts for unusable images.</li>
+                        <li>Employed MATLAB and Fourier analysis to screen images for excessive optical interference.</li>
+                        <li>Evaluated diverse laser diode parameters (wavelength, optical power, illumination uniformity, threshold current) while testing various imager modules, enhancing microscope image quality for optimal clarity.</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <section id="projects" class="mb-10">
+            <h2 class="text-2xl font-semibold section-title">
+                <i class="fas fa-flask"></i> Projects
+            </h2>
+
+            <details>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <div class="flex justify-between items-baseline w-full">
+                            <h3 class="text-xl font-semibold project-title">Automatic Parameter Adjusting Laser Engraving System (APALES)</h3>
+                            <span class="text-md date">August 2023 – April 2024</span>
+                        </div>
+                        <p class="text-lg company-name">UCF Optics Senior Design</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <ul class="list-disc ml-6 text-gray-800 mt-2">
+                        <li>Won 3rd place at Optics Senior Design Competition and was chosen as a semi-finalist at UCF school wide competition.</li>
+                        <li>Engineered smart laser engraver w/ custom spectrometer which analyzes reflected light to recognize previously used materials.</li>
+                        <li>Achieved material recognition accuracy of over 90% through proper optical alignment and Python code design.</li>
+                        <li>Designed laser optics system utilizing 2 biconvex lenses to achieve a spot size of less than 0.2 mm on wood.</li>
+                        <li>Utilized Solidworks to design spectrometer body and component housing then assembled using a 3D printer.</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <section id="skills" class="mb-10">
+            <h2 class="text-2xl font-semibold section-title">
+                <i class="fas fa-cogs"></i> Skills
+            </h2>
+            
+            <details open>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Optics & Photonics</h3>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <div class="flex flex-wrap">
+                        <span class="badge">Fiber Handling/Splicing/Coupling</span>
+                        <span class="badge">Lens Design</span>
+                        <span class="badge">Spectroscopy</span>
+                        <span class="badge">Fiber Lasers</span>
+                        <span class="badge">Nd:YAG Lasers</span>
+                        <span class="badge">CO2 Lasers</span>
+                        <span class="badge">UV Lasers</span>
+                        <span class="badge">Laser Diodes</span>
+                        <span class="badge">MATLAB Image Processing</span>
+                        <span class="badge">Beam Alignment</span>
+                        <span class="badge">Zemax</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Programming</h3>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <div class="flex flex-wrap">
+                        <span class="badge">Python</span>
+                        <span class="badge">Java</span>
+                        <span class="badge">C</span>
+                        <span class="badge">C++</span>
+                        <span class="badge">HTML</span>
+                        <span class="badge">MATLAB</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Mechanical Design & Fabrication</h3>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <div class="flex flex-wrap">
+                        <span class="badge">Solidworks</span>
+                        <span class="badge">FreeCAD</span>
+                        <span class="badge">3D Printing</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Electrical Engineering</h3>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <div class="flex flex-wrap">
+                        <span class="badge">Oscilloscope</span>
+                        <span class="badge">Function Generator</span>
+                        <span class="badge">Multimeter</span>
+                        <span class="badge">Circuit Design</span>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <section id="certificates" class="mb-10">
+            <h2 class="text-2xl font-semibold section-title">
+                <i class="fas fa-award"></i> Professional Certificates
+            </h2>
+            <details>
+                <summary>
+                    <div class="flex flex-col flex-grow">
+                        <div class="flex justify-between items-baseline w-full">
+                            <h3 class="text-xl font-semibold certificate-title">Optical Engineering Specialization</h3>
+                            <span class="text-md date">2024</span>
+                        </div>
+                        <p class="text-lg company-name">University of Colorado at Boulder</p>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </summary>
+                <div>
+                    <p class="text-md text-gray-700">Comprehensive three-course specialization covering first-order optical design, efficiency, resolution, and advanced high-performance optical system design. Applied theoretical knowledge to practical optical design and optimization problems using industry-standard software (Zemax Optical Studio).</p>
+                </div>
+            </details>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
